@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title></title>		
+	</head>
+	<body>
+		
+		<script>
+			/*下面是用js动态创建form然后进行post提交的方式，参数url是表单提交的去向，参数params是给去向传递的参数（JSON结构），
+			参数target设置何处打开链接文档（可选）：*/
+			function postcall( url, params, target){
+			    var tempform = document.createElement("form");
+			    tempform.action = url;
+			    tempform.method = "post";
+			    tempform.style.display="none"
+			    if(target) {
+			        tempform.target = target;
+			    }
+			
+			    for (var x in params) {
+			        var opt = document.createElement("input");
+			        opt.name = x;
+			        opt.value = params[x];
+			        tempform.appendChild(opt);
+			    }
+			
+			    var opt = document.createElement("input");
+			    opt.type = "submit";
+			    tempform.appendChild(opt);
+			    document.body.appendChild(tempform);
+			    tempform.submit();
+			    document.body.removeChild(tempform);
+			}
+						
+			/*注意：即使js给form对象提供了submit()方法，那也不意为表单中可以不写提交按钮这个元素，
+			即form表单依然需要五脏俱全才可以使用js的submit()方法进行提交。*/
+			tcall( 'newAnime', {page_num:1,page_size:10});
+			//或 添加链接打开方式：
+			postcall( 'newAnime', {page_num:1,page_size:10}, '_blank');
+		</script>
+		
+	</body>
+</html>
